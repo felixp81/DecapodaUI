@@ -1,3 +1,4 @@
+import { InstrumentEditorComponent } from './instrument-editor/instrument-editor.component';
 import { Component } from '@angular/core';
 
 @Component({

@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   it(`should have as title 'DecapodaUI'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('DecapodaUI');
+    expect(app.title).toEqual('decapodaui');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('DecapodaUI app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('decapodaui app is running!');
   });
 });

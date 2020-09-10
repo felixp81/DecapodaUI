@@ -1,0 +1,24 @@
+The cockpit
+
+<div class="card">
+  <h5>Assets</h5>
+
+  <p-table [value]="allAssets" selectionMode="single" [(selection)]="selectedAsset" dataKey="assetName"   (onRowSelect)="onRowSelect($event)">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Asset Name</th>
+              <th>Symbol</th>
+
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-asset>
+          <tr [pSelectableRow]="product">
+              <td>{{asset.assetName}}</td>
+              <td>{{asset.symbol}}</td>
+
+      </ng-template>
+  </p-table>
+</div>
+
+
+<p-button label="Click" (onClick)="doSomething()" ></p-button>
