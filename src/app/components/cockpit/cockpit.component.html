@@ -3,7 +3,7 @@ The cockpit
 <div class="card">
   <h5>Assets</h5>
 
-  <p-table [value]="allAssets" selectionMode="single" [(selection)]="selectedAsset" dataKey="assetName"   (onRowSelect)="onRowSelect($event)">
+  <p-table [value]="allAssets" selectionMode="single" [(selection)]="selectedAsset" dataKey="assetName" (onRowSelect)="onRowSelect($event)">
       <ng-template pTemplate="header">
           <tr>
               <th>Asset Name</th>
@@ -12,13 +12,55 @@ The cockpit
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-asset>
-          <tr [pSelectableRow]="product">
+
+        <tr [pSelectableRow]="asset">
               <td>{{asset.assetName}}</td>
               <td>{{asset.symbol}}</td>
+
+
 
       </ng-template>
   </p-table>
 </div>
 
+<p-button label="Click" (onClick)="updateInstrument()" ></p-button>
+<p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
 
-<p-button label="Click" (onClick)="doSomething()" ></p-button>
+
+<p-table [value]="allTrades" selectionMode="single" [(selection)]="selectedTrade" dataKey="tradeName" (onRowSelect)="onTradeRowSelect($event)">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Date</th>
+
+          <th>Action</th>
+          <th>Status</th>
+          <th>Price</th>
+      </tr >
+  </ng-template>
+  <ng-template pTemplate="body" let-trade>
+
+    <tr [pSelectableRow]="trade">
+          <td>{{trade.timestamp}}</td>
+          <td>{{trade.action}}</td>
+          <td>{{trade.status}}</td>
+          <td>{{trade.price}}</td>
+  </ng-template>
+</p-table>
+
+
+<p-table [value]="allStatements" selectionMode="single" [(selection)]="selectedStatement" dataKey="statementName">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Date</th>
+
+          <th>Amount</th>
+      </tr >
+  </ng-template>
+  <ng-template pTemplate="body" let-statement>
+
+    <tr [pSelectableRow]="statement">
+          <td>{{statement.date}}</td>
+          <td>{{statement.amount}}</td>
+
+  </ng-template>
+</p-table>

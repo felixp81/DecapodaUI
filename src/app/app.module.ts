@@ -16,6 +16,8 @@ import {PickListModule} from 'primeng/picklist';
 
 import { CockpitComponent } from './components/cockpit/cockpit.component';
 import {ButtonModule} from 'primeng/button';
+import {ChartModule} from 'primeng/chart';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import {ButtonModule} from 'primeng/button';
     BrowserModule,
     ListboxModule,
     PickListModule,
+    ChartModule,
     TableModule,
     AppRoutingModule,
     FormsModule,

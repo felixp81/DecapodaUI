@@ -1,5 +1,8 @@
 export interface IAsset {
-  assetKey: string;
   assetName: string;
-  symbol: string;
+  symbolIdent: string;
+  avg50: string;
+  avg200: string;
+
+
 }
