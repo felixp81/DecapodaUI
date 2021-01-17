@@ -1,3 +1,4 @@
+import { Config } from './../api/config';
 import { IAccountStatement } from './interfaces/iaccount-statement';
 import { ITrade } from './interfaces/itrade';
 import { IAssetTick } from './interfaces/iasset-tick';
@@ -22,7 +23,7 @@ export class InstrumentsService {
 
   getBaseUrl()
   {
-    return "https://localhost:5001";
+    return Config.getBaseUrl();
   }
 
 
@@ -35,7 +36,7 @@ export class InstrumentsService {
     headers.append('Content-Type', 'application/json');
     headers.append("assetSymbol", instIdent );
     let params = new HttpParams();
-    params.append("assetSymbol", instIdent);
+    params = params.append("assetSymbol", instIdent);
       this.http.get<ITrade[]>(this.getBaseUrl() + '/api/trades/getAllTrades', {headers: headers, params: params}).subscribe(
           (res: any) => {
             result.next(res);
@@ -73,9 +74,10 @@ getNavs(instIdent: string): Subject<IAssetTick[]>
   const result: Subject<IAssetTick[]> = new Subject<IAssetTick[]>();
   let headers = new HttpHeaders();
   headers.append('Content-Type', 'application/json');
-  headers.append("assetSymbol", instIdent );
+
   let params = new HttpParams();
-  params.append("assetSymbol", instIdent);
+  params = params.append("assetSymbol", instIdent);
+
     this.http.get<IAssetTick[]>(this.getBaseUrl() + '/api/fin/getTicksForIdent', {headers: headers, params: params}).subscribe(
         (res: any) => {
           result.next(res);
@@ -98,7 +100,7 @@ updateInstrument(instIdent: string): Subject<any>
   headers.append('Content-Type', 'application/json');
   headers.append("assetSymbol", instIdent );
   let params = new HttpParams();
-  params.append("assetSymbol", instIdent);
+  params = params.append("assetSymbol", instIdent);
     this.http.get<IAsset[]>(this.getBaseUrl() + '/api/fin/doUpdate', {headers: headers, params: params}).subscribe(
         (res: any) => {
           result.next(res);

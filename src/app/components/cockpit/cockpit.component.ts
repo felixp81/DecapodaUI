@@ -61,12 +61,59 @@ export class CockpitComponent implements OnInit {
   }
 
 
-  updateTrades(ident: string)
+  updateTrades(ident: string,  data)
   {
     this.instService.getTrades(ident).subscribe(
       (trades: ITrade[])=>
       {
         this.allTrades = trades;
+
+
+      //  data.datasets.length = 3;
+
+        data.datasets.push(
+          {
+            label: "Buy",
+            data: [],
+            fill: false,
+            borderColor: "red"
+          },
+          {
+            label: "Sell",
+            data: [],
+            fill: false,
+            borderColor: "red"
+          });
+
+          for (let i = 0; i<data.labels.length; i++)
+          {
+            data.datasets[3].data.push(null);
+            data.datasets[4].data.push(null);
+          };
+
+
+         this.allTrades.forEach(element => {
+
+          let label:string ="";
+
+          data.labels.forEach(timeSt => {
+              let  d: Date = timeSt;
+              if (d <= element.timestamp)
+                label = timeSt;
+          });
+
+          let index = data.labels.findIndex((exLabel) => exLabel == label);
+          if (index >= 0) {
+            if (element.action== "overweight" && element.status != "rejected")
+              data.datasets[3].data[index] = element.price * 1.01;
+            else if (element.action != "overweight" && element.status != "rejected")
+              data.datasets[4].data[index] = element.price * 0.99;
+          }
+        });
+
+this.data = data;
+
+
       },
       (error: Error) =>
       {
@@ -89,9 +136,8 @@ export class CockpitComponent implements OnInit {
   onRowSelect(event) {
 
     this.selectedAsset = event.data;
-this.updateTrades(this.selectedAsset.symbolIdent);
 
-    this.instService.updateInstrument("appl");
+    this.instService.updateInstrument(this.selectedAsset.symbolIdent);
     this.data = {
       labels: [],
       datasets: [
@@ -113,12 +159,11 @@ this.updateTrades(this.selectedAsset.symbolIdent);
           fill: true,
           borderColor: "green"
         }
+
       ]
     };
 
-
-
-    this.instService.getNavs("aa").subscribe(
+    this.instService.getNavs(this.selectedAsset.symbolIdent).subscribe(
       (navs: IAssetTick[]) => {
         let data = { labels: [], datasets: [] };
         data.datasets.push({
@@ -148,14 +193,12 @@ this.updateTrades(this.selectedAsset.symbolIdent);
             data.datasets[0].data.push(navs[count].price);
             data.datasets[1].data.push(navs[count].avglast50);
             data.datasets[2].data.push(navs[count].avglast200);
-
-         //   data.datasets[1].data.push(this.selectedAsset.avg50)
-       //    data.datasets[2].data.push(this.selectedAsset.avg200)
           }
         }
 
+;
+       this.updateTrades(this.selectedAsset.symbolIdent, data);
 
-        this.data = data;
 
       });
   }
